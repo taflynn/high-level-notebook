@@ -1,2 +1,6 @@
+.ipynb_checkpoints/
+
 tools/.ipynb_checkpoints/
 tools/__pycache__/
+
+perf_workbook_venv
