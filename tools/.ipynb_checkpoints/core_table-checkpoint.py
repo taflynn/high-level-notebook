@@ -12,7 +12,7 @@ class core_perf:
 
     def core_perf_table(self):
         ''' Draw a table indicating flaws in code '''
-        data = [['perfect','',''],['','','flaw'],['','severe flaw','']]
+        data = [['','',''],['','',''],['','','']]
         column_headings = [r'$C_{\mathrm{bw}} \geq 0.8$',r'0.8 > $C_{\mathrm{bw}} \geq 0.6$',r'$0.6 > C_{\mathrm{bw}}$']
         row_headings = [r'$C_{\mathrm{peak}} \geq 0.8$',r'0.8 > $C_{\mathrm{peak}} \geq 0.6$',r'$0.6 > C_{\mathrm{peak}}$']
         
@@ -36,11 +36,14 @@ class core_perf:
                           rowLabels = row_headings,
                           colLabels = column_headings,
                           loc = 'center',
+                          colLoc = 'center',
+                          cellLoc = 'center',
+                          rowLoc = 'center',
                           cellColours = cell_colours)
         '''
         for cell in table.get_celld().values():
             cell.set_edgecolor('none')
         '''
 
-        table.scale(2,4)
+        table.scale(1.5,3)
         plt.show()
