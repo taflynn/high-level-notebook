@@ -25,18 +25,23 @@ class intra_node_perf():
 
     def plot_efficiency_graph(self):
         ''' Plot Efficiency against Number of Cores graph '''
-        plt.title("Efficiency against Number of Cores")
-        plt.xlabel("Number of Cores")
-        plt.ylabel("Efficiency")
-        plt.xticks(self.number_of_cores)
-        plt.plot(self.number_of_cores, self.efficiency, linewidth=2)
+        fig, ax = plt.subplots()
+        ax.axhline(y=0.8, color="#ffc844", linestyle="--")
+        ax.axhline(y=0.6, color="#e35555", linestyle="--")
+        ax.set_title('Efficiency against Number of Cores')
+        ax.set_xlabel('Number of Cores')
+        ax.set_ylabel('Efficiency')
+        ax.set_xticks(self.number_of_cores)
+        ax.plot(self.number_of_cores, self.efficiency, '.-', color="black", linewidth=2)
+
         plt.show()
 
     def plot_time_graph(self):
         ''' Plot Time against Number of Cores graph '''
-        plt.title("Time against Number of Cores")
-        plt.xlabel("Number of Cores")
-        plt.ylabel("Time")
-        plt.xticks(self.number_of_cores)
-        plt.plot(self.number_of_cores, self.time, linewidth=2, color = 'red')
+        fig, ax = plt.subplots()
+        ax.set_title("Time against Number of Cores")
+        ax.set_xlabel("Number of Cores")
+        ax.set_ylabel("Time")
+        ax.set_xticks(self.number_of_cores)
+        plt.plot(self.number_of_cores, self.time, '.-', color = 'black', linewidth=2)
         plt.show()
