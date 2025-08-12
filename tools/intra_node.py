@@ -18,16 +18,28 @@ class intra_node_perf():
         # calculate Intra Node Proportion
         E_value,i = 1,0
         while E_value >= 0.8:
-            E_value = serial_time/(time[i]*number_of_cores[i])
             i += 1
-        p_critical = number_of_cores[i-1]
-        self.intraNode_proportion = p_critical / max(number_of_cores)
+            E_value = serial_time/(time[i]*number_of_cores[i])
+        self.p_critical_80 = number_of_cores[i-1]
+        self.intraNode_proportion_80 = self.p_critical_80 / max(number_of_cores)
+
+        E_value,i = 1,0
+        while E_value >= 0.6:
+            i += 1
+            E_value = serial_time/(time[i]*number_of_cores[i])
+        self.p_critical_60 = number_of_cores[i-1]
+        self.intraNode_proportion_60 = self.p_critical_60 / max(number_of_cores)
+
+        print(r'80% intra-node metric:', self.intraNode_proportion_80)
+        print(r'60% intra-node metric:', self.intraNode_proportion_60)
 
     def plot_efficiency_graph(self):
         ''' Plot Efficiency against Number of Cores graph '''
         fig, ax = plt.subplots()
-        ax.axhline(y=0.8, color="#ffc844", linestyle="--")
-        ax.axhline(y=0.6, color="#e35555", linestyle="--")
+        #ax.axhline(y=0.8, color="#ffc844", linestyle="--")
+        #ax.axhline(y=0.6, color="#e35555", linestyle="--")
+        ax.axvline(x=self.p_critical_80, color="#ffc844", linestyle="--")
+        ax.axvline(x=self.p_critical_60, color="#e35555", linestyle="--")        
         ax.set_title('Efficiency against Number of Cores')
         ax.set_xlabel('Number of Cores')
         ax.set_ylabel('Efficiency')
