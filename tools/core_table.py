@@ -28,7 +28,7 @@ class core_perf:
         C,D = (self.bw_proportion >= 0.8),(self.bw_proportion >= 0.6)
         option = (A and C)*0 + (A and D and not(C))*1 + (A and not(D))*2 + (C and not(A) and B)*3 + (not(A or C) and B and D)*4
         option += (not(A or D) and B)*5 + (C and not(B))*6 + (not(B or C) and D)*7 + (not(B or D))*8
-        data[option // 3][option % 3] = 'X'
+        data[option // 3][option % 3] = r'$C_{\mathrm{bw}} =$' + f'{self.bw_proportion:.2f}' + r', $C_{\mathrm{peak}} =$' + f'{self.performance_proportion:.2f}'
         
         plt.rcParams.update({'font.size': 18}) 
 
