@@ -38,7 +38,6 @@ class intra_node_perf():
         ax.set_title('Efficiency against Number of Cores')
         ax.set_xlabel('Number of Cores')
         ax.set_ylabel('Efficiency')
-        ax.set_xticks(self.number_of_cores)
         ax.plot(self.number_of_cores, self.efficiency, '.-', color="black", linewidth=2)
 
         plt.show()
@@ -49,7 +48,6 @@ class intra_node_perf():
         ax.set_title("Time against Number of Cores")
         ax.set_xlabel("Number of Cores")
         ax.set_ylabel("Time")
-        ax.set_xticks(self.number_of_cores)
         plt.plot(self.number_of_cores, self.time, '.-', color = 'black', linewidth=2)
         plt.show()
 
