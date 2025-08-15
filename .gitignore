@@ -1,6 +1,6 @@
 .ipynb_checkpoints/
 
-tools/.ipynb_checkpoints/*.py
-tools/__pycache__/*.pyc
+topics/.ipynb_checkpoints/*.py
+topics/__pycache__/*.pyc
 
 perf_workbook_venv
