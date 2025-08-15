@@ -19,9 +19,9 @@ class core_perf:
         fig, ax = plt.subplots()
         ax.set_axis_off()
         
-        cell_colours = [['#0fa834','#0fa834','#ffc844'],
-                        ['#0fa834','#ffc844','#ffc844'],
-                        ['#e35555','#e35555','#e35555']]
+        cell_colours = [['#0fa83480','#0fa83480','#ffc84480'],
+                        ['#0fa83480','#ffc84480','#ffc84480'],
+                        ['#e3555580','#e3555580','#e3555580']]
         
         # find cell for statistics
         A,B = (self.performance_proportion >= 0.8),(self.performance_proportion >= 0.6)
