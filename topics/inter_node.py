@@ -36,36 +36,34 @@ class inter_node_perf():
         '''Plot Efficiency against Number of Nodes'''
         
         fig, ax = plt.subplots()
+        ax.set_xlabel(r'$n$')
+        ax.set_ylabel(r'$E(n)$')
         
         ax.axvline(x=self.p_critical_80, color="#ffc844", linestyle="--")
-        ax.axvline(x=self.p_critical_60, color="#e35555", linestyle="--")        
-        
-        ax.set_title('Efficiency against Number of Nodes')
-        ax.set_xlabel('Number of Nodes')
-        ax.set_ylabel('Efficiency')
-        
+        ax.axvline(x=self.p_critical_60, color="#e35555", linestyle="--")    
         ax.plot(self.node_count, self.efficiency, '.-', color="black", linewidth=2)
+        
         plt.show()
 
     def plot_time_graph(self):
         '''Plot Time against Number of Nodes'''
         
         fig, ax = plt.subplots()
-        ax.set_title("Time against Number of Cores")
-        ax.set_xlabel("Number of Cores")
-        ax.set_ylabel("Time")
+        ax.set_xlabel(r'$n$')
+        ax.set_ylabel(r'$t(n)$')
         
         plt.plot(self.node_count, self.runtime, '.-', color = 'black', linewidth=2)
+        
         plt.show()
 
     def inter_perf_table(self):
         ''' Draw a table indicating flaws in code '''
         data = [[''], [''], ['']]
         column_headings = [r'Parallel efficiency metrics']
-        row_headings = [r'$C_{\mathrm{intra}}^{80\%} \geq 0.8$',
-                        r'$C_{\mathrm{intra}}^{80\%} < 0.8 \wedge C_{\mathrm{intra}}^{60\%} \geq 0.6$',r'otherwise']
+        row_headings = [r'$C_{\mathrm{inter}}^{80\%} \geq 0.8$',
+                        r'$C_{\mathrm{inter}}^{80\%} < 0.8 \wedge C_{\mathrm{inter}}^{60\%} \geq 0.6$',r'otherwise']
 
-        perf_str = [r'$C_{\mathrm{intra}}^{80\%} =$' + f'{self.interNode_proportion_80:.2f}' + r', $C_{\mathrm{intra}}^{60\%} =$' + f'{self.interNode_proportion_60:.2f}']
+        perf_str = [r'$C_{\mathrm{inter}}^{80\%} =$' + f'{self.interNode_proportion_80:.3f}' + r', $C_{\mathrm{inter}}^{60\%} =$' + f'{self.interNode_proportion_60:.3f}']
         
         if self.interNode_proportion_80 >= 0.8:
             data[0] = perf_str
