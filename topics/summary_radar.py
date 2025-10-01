@@ -1,12 +1,13 @@
 import pandas as pd
 import plotly.express as px
 class summary:
-    def __init__(self,core_perf,intra_node_perf):
-        self.core_proportion = core_perf.core_proportion
-        self.intraNode_proportion = intra_node_perf.intraNode_proportion
+    def __init__(self, core_perf, intra_node_perf):
+        ''' Placeholder for now '''
     def draw_radar(self):
         ''' Draw the Radar Diagram '''
         ### TEMPORARY PLACEHOLDER VARIABLES ###
+        core_proportion = 0.82
+        intraNode_proportion = 0.9
         interNode_proportion = 0.7
         IO_proportion = 0.5
         GPU_porporion = 0.3
@@ -17,7 +18,7 @@ class summary:
         
         # define data to draw diagram
         data = pd.DataFrame(dict(
-            proportions = [self.core_proportion, self.intraNode_proportion, interNode_proportion, IO_proportion, GPU_porporion],
+            proportions = [core_proportion, intraNode_proportion, interNode_proportion, IO_proportion, GPU_porporion],
             rubrics = ['Core','Intra node','Inter node',
                    'I/O', 'GPU']))
         
