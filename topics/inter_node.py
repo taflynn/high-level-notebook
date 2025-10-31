@@ -42,14 +42,15 @@ class inter_node_perf():
         plt.show()
 
     def inter_node_perf_table(self):
-        ''' Draw a table indicating flaws in code '''
+        '''Generates a traffic-light table for the inter-node performance metric'''
         data = [[''], [''], ['']]
         column_headings = [r'Parallel efficiency metrics']
         row_headings = [r'$C_{\mathrm{inter}}^{80\%} \geq 0.8$',
                         r'$C_{\mathrm{inter}}^{80\%} < 0.8 \wedge C_{\mathrm{inter}}^{60\%} \geq 0.6$', 
                         r'otherwise']
 
-        perf_str = [r'$C_{\mathrm{inter}}^{80\%} =$' + f'{self.inter_node_prop_80:.3f}' + r', $C_{\mathrm{inter}}^{60\%} =$' + f'{self.inter_node_prop_60:.3f}']
+        perf_str = [r'$C_{\mathrm{inter}}^{80\%} =$' + f'{self.inter_node_prop_80:.3f}' 
+                    + r', $C_{\mathrm{inter}}^{60\%} =$' + f'{self.inter_node_prop_60:.3f}']
         
         if self.inter_node_prop_80 >= 0.8:
             data[0] = perf_str
