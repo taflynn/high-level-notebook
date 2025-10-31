@@ -1,73 +1,59 @@
 import matplotlib.pyplot as plt
+import numpy as np
 
 class inter_node_perf():
-    def __init__(self, serial_time, node_count, runtime):
-        '''Calculate statistics about inter-node performance'''
+    def __init__(self, serial_runtime, node_count, parallel_runtimes):
+        '''Raw inter-node performance data'''
 
-        self.serial_time = serial_time
-        self.node_count = node_count
-        self.runtime = runtime
+        self.serial_runtime = serial_runtime
+        self.node_count = np.array(node_count)
+        self.parallel_runtimes = np.array(parallel_runtimes)
         
-        # amount of data
-        self.amount_of_data = len(node_count)
+        self.efficiency = self.serial_runtime/self.parallel_runtimes
+
+        self.p_crit_80 = self.node_count[(self.efficiency < 0.8) & (self.efficiency >= 0.6)][-1]
+        self.p_crit_60 = self.node_count[(self.efficiency < 0.6) & (self.node_count > self.p_crit_80)][0]
         
-        # calculate speed up (mod)
-        self.speed_up_mod = [self.serial_time / t for t in self.runtime]
-        
-        # calculate efficiency
-        self.efficiency = [self.speed_up_mod[i] / self.node_count[i] for i in range(self.amount_of_data)]
+        self.inter_node_prop_80 = self.p_crit_80 / max(self.node_count)
+        self.inter_node_prop_60 = self.p_crit_60 / max(self.node_count)
 
-        # calculate Intra Node Proportion
-        E_value, i = 1, 0
-        while E_value >= 0.8:
-            i += 1
-            E_value = self.serial_time/(self.runtime[i]*self.node_count[i])
-        self.p_critical_80 = self.node_count[i-1]
-        self.interNode_proportion_80 = self.p_critical_80 / max(self.node_count)
-
-        E_value, i = 1, 0
-        while E_value >= 0.6:
-            i += 1
-            E_value = self.serial_time/(self.runtime[i]*self.node_count[i])
-        self.p_critical_60 = self.node_count[i-1]
-        self.interNode_proportion_60 = self.p_critical_60 / max(self.node_count)
-
-    def plot_efficiency_graph(self):
-        '''Plot Efficiency against Number of Nodes'''
+    def parallel_efficiency_figure(self):
+        '''Generates a figure of parallel efficiency against number of nodes'''
         
         fig, ax = plt.subplots()
         ax.set_xlabel(r'$n$')
         ax.set_ylabel(r'$E(n)$')
         
-        ax.axvline(x=self.p_critical_80, color="#ffc844", linestyle="--")
-        ax.axvline(x=self.p_critical_60, color="#e35555", linestyle="--")    
+        ax.axvline(x=self.p_crit_80, color="#ffc844", linestyle="--")
+        ax.axvline(x=self.p_crit_60, color="#e35555", linestyle="--")    
         ax.plot(self.node_count, self.efficiency, '.-', color="black", linewidth=2)
         
         plt.show()
 
-    def plot_time_graph(self):
-        '''Plot Time against Number of Nodes'''
+    def runtimes_figure(self):
+        '''Generates a figure of parallel efficiency against number of nodes'''
         
         fig, ax = plt.subplots()
         ax.set_xlabel(r'$n$')
         ax.set_ylabel(r'$t(n)$')
         
-        plt.plot(self.node_count, self.runtime, '.-', color = 'black', linewidth=2)
+        plt.plot(self.node_count, self.parallel_runtimes, '.-', color = 'black', linewidth=2)
         
         plt.show()
 
-    def inter_perf_table(self):
+    def inter_node_perf_table(self):
         ''' Draw a table indicating flaws in code '''
         data = [[''], [''], ['']]
         column_headings = [r'Parallel efficiency metrics']
         row_headings = [r'$C_{\mathrm{inter}}^{80\%} \geq 0.8$',
-                        r'$C_{\mathrm{inter}}^{80\%} < 0.8 \wedge C_{\mathrm{inter}}^{60\%} \geq 0.6$',r'otherwise']
+                        r'$C_{\mathrm{inter}}^{80\%} < 0.8 \wedge C_{\mathrm{inter}}^{60\%} \geq 0.6$', 
+                        r'otherwise']
 
-        perf_str = [r'$C_{\mathrm{inter}}^{80\%} =$' + f'{self.interNode_proportion_80:.3f}' + r', $C_{\mathrm{inter}}^{60\%} =$' + f'{self.interNode_proportion_60:.3f}']
+        perf_str = [r'$C_{\mathrm{inter}}^{80\%} =$' + f'{self.inter_node_prop_80:.3f}' + r', $C_{\mathrm{inter}}^{60\%} =$' + f'{self.inter_node_prop_60:.3f}']
         
-        if self.interNode_proportion_80 >= 0.8:
+        if self.inter_node_prop_80 >= 0.8:
             data[0] = perf_str
-        elif self.interNode_proportion_80 < 0.8 and self.interNode_proportion_60 >= 0.6:
+        elif self.inter_node_prop_80 < 0.8 and self.inter_node_prop_60 >= 0.6:
             data[1] = perf_str
         else:
             data[2] = perf_str
