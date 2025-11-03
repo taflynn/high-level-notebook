@@ -1,6 +1,6 @@
 import pandas as pd
 import plotly.express as px
-class summary:
+class summary_perf:
     def __init__(self, core_perf_stats, intra_node_perf_stats, inter_node_perf_stats, gpu_perf_stats, io_perf_stats):
 
         self.core_perf_stats = core_perf_stats
