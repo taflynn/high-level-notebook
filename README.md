@@ -42,14 +42,27 @@ of the observed compute rate for the application.
 
 Intra-node performance analysis is packaged up into the `intra_node_perf`
 class, which has three methods:
-1. `parallel efficiency figure` - this generates a figure of the parallel efficiency
-   against the core count. It also includes amber and red vertical, dashed
-lines, beyond which the parallel efficiency drops below 80% and 60%,
+1. `parallel efficiency figure` - this generates a figure of the parallel
+   efficiency against the core count. It also includes amber and red vertical,
+dashed lines, beyond which the parallel efficiency drops below 80% and 60%,
 respectively.
 2. `runtimes_figure` - this generates a figure of the total runtime against the
    core count.
 3. `intra_node_perf_table` - this generates a table with a score of how
    effectively the intra-node parallelism scales across the available cores.
+The core counts and runtimes are read into these methods as lists. For
+convenvience the data can be read in as a file, e.g., by using `pandas` like
+```bash
+# read in data
+df = pandas.read_csv('./runtime_data.csv', header=None)
+
+# core count data from first column
+number_of_cores = list(df[df.columns[0]]) 
+# application runtime data from second column
+time = list(df[df.columns[1]])
+```
+where here we have set up around data with core counts in the first column, and
+associated runtimes in the second column.
 
 ### Inter-node analysis
 
@@ -63,6 +76,8 @@ respectively.
    node count.
 3. `inter_node_perf_table` - this generates a table with a score of how
    effectively the inter-node parallelism scales across the available nodes.
+The node counts and associated runtimes are read into the methods as lists, and
+we can again read these in as above using a module such as `pandas`.
 
 ### GPU analysis
 
